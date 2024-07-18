@@ -14,10 +14,32 @@ driver = webdriver.Chrome(options=options, service=service)
 url = "https://contratos.sistema.gov.br/transparencia/arp-item?palavra_chave=equipo&status=todos"
 driver.get(url)
 
-# Wait for the table to load
-table = WebDriverWait(driver, 30).until(
-    EC.presence_of_element_located((By.CLASS_NAME, "dataTables_wrapper"))
-)
+#Array - of div
+#r = driver.find_elements(By.TAG_NAME, 'div')
 
-# Get the HTML of the page
-html = driver.page_source
+#Wait 
+print("Waiting for table to load...")
+wait = WebDriverWait(driver, 60)  # adjust the timeout to 60 seconds
+
+
+#Find element
+# t = driver.find_elements(By.CLASS_NAME, 'dataTables_wrapper')
+# print(t)
+
+# to_text = t[0].text
+# print(to_text)
+
+#Find tablerow
+# t_row = driver.find_elements(By.TAG_NAME, 'tr')
+
+# t_row_text = t_row[0].text
+# print(t_row_text)
+
+#Table responsive
+# table_element = driver.find_element(By.CLASS_NAME, 'table-responsive')
+# print("Table element:", table_element)]
+table_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'table-responsive')))
+print("Table loaded!")
+print("Table element:", table_element)
+
+#Base

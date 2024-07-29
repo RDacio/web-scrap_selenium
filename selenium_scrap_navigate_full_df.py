@@ -46,10 +46,10 @@ for page in range(1, 10):
     if page < 9:
         # Click the next button
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(1)  # Allow time for any scrolling animation
+        time.sleep(1)  # aguardar load
         next_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@class='page-link' and text()='Próximo']")))
         next_button.click()
-        time.sleep(10)  # You can adjust this timeout as needed
+        time.sleep(10)  # tempo pro navegador burro carregar 
         wait.until(EC.presence_of_all_elements_located((By.XPATH, "//tbody/tr")))
 
 

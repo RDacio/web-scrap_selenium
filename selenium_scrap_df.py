@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
 
 # Initialize Chrome
 service = Service()
@@ -17,21 +16,19 @@ url = "https://contratos.sistema.gov.br/transparencia/arp-item?palavra_chave=equ
 driver.get(url)
 print("Page source length before waiting:", len(driver.page_source))
 
-select_element = Select(driver.find_element(By.NAME, "itens_length"))
-select_element.select_by_value("100")
-
 # Wait for the table to be populated
 wait.until(EC.presence_of_all_elements_located((By.XPATH, "//tbody/tr")))
 print('wait')
-# Now you can extract the table
-table = driver.find_elements(By.TAG_NAME, 'td')
 
-print('done')
+# Create a Pandas DataFrame with 12 columns
+df = pd.DataFrame(columns=['Column1', 'Column2', 'Column3', 'Column4', 
+                           'Column5', 'Column6', 'Column7', 'Column8', 
+                           'Column9', 'Column10', 'Column11', 'Column12'])
 
-for i in table:
-    print(i.get_attribute("innerHTML"))
-print("Page source length after waiting:", len(driver.page_source))
-# Once the element is found, you 
-# can proceed with extracting the table data
+# Extract the table data
+table_rows = driver.find_elements(By.TAG_NAME, 'tr')
+for row in table_rows:
+    cols = row.find_elements(By.TAG_NAME, 'td')
+    row_data = [i.get_attribute("innerHTML") for i in cols]
+    print(row_data)
 
-#A lot of garb
